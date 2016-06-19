@@ -86,7 +86,7 @@ gulp.task('publish-img',function(){
 });
 
 //测试包
-gulp.task('bundle',['publish-img','js-dev','css', 'watch:css']);
+gulp.task('bundle',['publish-img','js-dev','css', 'watch:css','watch:less-dev']);
 
 //正式包(不压缩和不提取公共模块 不版本化)
 gulp.task('pack',['publish-img','js','css']);

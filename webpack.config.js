@@ -30,7 +30,7 @@ module.exports = function(isWatch, isDev, isRev) {
             extensions:['.js','.tpl','.less','.json',''],
             modulesDirectories:['dep','tpl','node_modules'],
             alias: {
-                'mock': 'mock.js'
+                'mock': 'mock.js',
             }
         },
         plugins: (function (){
