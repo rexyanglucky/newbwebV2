@@ -1,0 +1,46 @@
+{
+  "name": "webpack-demo",
+  "version": "1.0.0",
+  "description": "debpack-demo",
+  "main": "gulpFile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "null"
+  ],
+  "author": "humorHan",
+  "license": "ISC",
+  "dependencies": {
+    "extract-text-webpack-plugin": "*",
+    "css-loader":"*",
+    "style-loader":"*",
+    "webpack-stream":"*",
+    "gulp": "^3.8.11",
+    "gulp-less":"*",
+    "gulp-plumber":"*",
+    "vinyl-named":"*",
+    "webpack":"1.12.2",
+    "gulp-sourcemaps":"*",
+    "assets-webpack-plugin":"*",
+    "gulp-rev":"*",
+    "gulp-rev-collector":"*",
+    "gulp-minify-css":"*",
+    "gulp-minify-html":"*",
+    "del":"*",
+    "vinyl-paths":"*",
+    "gulp-uglify":"*",
+    "gulp-rename":"*",
+    "tmodjs-loader":"*",
+    "url-loader":"*",
+    "json-loader":"*",
+    "stylus-loader":"*",
+    "css-loader":"*",
+    "less-loader":"*",
+    "hanson":"*",
+    "hson-loader":"*",
+    "exports-loader":"*",
+    "script-loader":"*",
+    "file-loader":"*"
+  }
+}

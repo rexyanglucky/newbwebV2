@@ -1,0 +1,1 @@
+{"version":3,"sources":["demo-less.less"],"names":[],"mappings":"AAAA,IACE;EACE,mBAAA;EACA,aAAA","sourcesContent":["body{\r\n  .dom1{\r\n    background: #3fa462;\r\n    height: 100px;\r\n  }\r\n}"],"file":"demo-less.css","sourceRoot":"/source/"}

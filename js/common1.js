@@ -1,0 +1,1 @@
+console.log('来自公共文件common1');
