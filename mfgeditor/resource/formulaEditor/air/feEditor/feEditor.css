@@ -1,0 +1,29 @@
+/*.feEditor{width: 680px;z-index: 500;}*/
+.feEditor .fe-hd,.feEditor .fe-ft{width: 680px;height: 5px;background: url(img_d/fe_Rhead.png) no-repeat;_overflow:hidden;}
+.feEditor .fe-hd{background-position: 0px 0px;}
+.feEditor .fe-ft{background-position: 0px -5px;}
+.feEditor .fe-bd{background-color:#cac7be;}
+
+.fe-switchs .fe-switch{font-size: 12px;color: #666;margin: 2px 5px 6px 15px;}
+.fe-switchs .fe-switch:hover{text-decoration: none;}
+.fe-switchs .fe-cur{color: #666;font-weight: bold;}
+
+.feEditor .fe-More{cursor:pointer;margin-top:5px;height:14px;line-height:14px;font-size: 12px;color: #868275;background: url(img_s/fe-More.png) no-repeat 55% center;}
+.feEditor .more-open{background: url(img_s/fe-More_hv.png) no-repeat 55% center;}
+
+.feEditor .fe-btnItem{margin: 0px -1px 2px 4px;_display:inline;}
+.feEditor .fe-btn{display: block;width: 42px;height: 36px;}
+.feEditor .fe-btn:hover{text-decoration: none;}
+.feEditor .fe-Math .fe-btn{background: url(img_d/fe-Math.png) no-repeat;}
+.feEditor .fe-Chem .fe-btn{background: url(img_d/fe-Chem.png) no-repeat;}
+.feEditor .fe-ChemWrp{display: none;}
+
+.feEditor .fe-Math{height: 114px;overflow: hidden;}
+
+.celltext {outline:none;background:none;vertical-align:middle;line-height:26px; height:26px;text-align: left;border: 0px;font-weight: 0;font-size: 14px;color: #666;font-family: '宋体','Times New Roman', Times, serif;}
+#latex-input{width: 1px;height: 1px;opacity:0;filter:alpha(opacity=0);position:absolute;left:0px;bottom:0px;border:none;outline:none;background:none;resize:none; font-size: 1px; text-indent: -999px;_position:absolute;_bottom:auto;_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));}
+#latex-toget{opacity:0;filter:alpha(opacity=0);position:absolute;left:0px;bottom:0px;_position:absolute;_bottom:auto;_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));}
+#lastcell{ width: 100%;}
+.editortablerow td{vertical-align: top;cursor: text;}
+#latex-outplane{cursor: text;}
+.formulaOutplane{position: relative;}

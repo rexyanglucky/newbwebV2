@@ -1,0 +1,87 @@
+html{overflow-y:scroll;*overflow:auto;}
+body,div,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dd,dt,p,hr,blockquote,address,pre,code,form,fieldset,legend,textarea,input,button,th,td{margin:0;padding:0;}
+body,button, input, select, textarea {font: 14px/1.5 "\5b8b\4f53", Tahoma, Helvetica, Arial, sans-serif;}
+h1, h2, h3, h4, h5, h6, button, input, select, textarea {font-size: 100%;}
+fieldset,img {border: 0;}
+
+/* a */
+a {text-decoration: none;}
+a:hover {text-decoration: underline;}
+/* ol&ul */
+li{list-style:none}
+.lil li{float:left;display:inline;}
+.lir li{float:right;display:inline;}
+/* table */
+table {border-collapse: collapse; border-spacing: 0;}
+
+/* Hack */
+.clearfix{display: block;*zoom:1;}
+.clearfix:after {content: "\20";display: block;height: 0;clear: both;visibility: hidden;overflow:hidden;}
+.bfc{overflow: hidden;zoom: 1;}
+
+/* width&height */
+.w{width:100%;}
+.h{height:100%;}
+.wh{width:100%;height: 100%;}
+/* margin */
+.mC{margin: 0 auto;}
+.mt10{margin-top:10px;}
+.mb10{margin-bottom:10px;}
+.mt20{margin-top:20px;}
+.mb20{margin-bottom:20px;}
+.mt30{margin-top:30px;}
+.mb30{margin-bottom:30px;}
+/* blank */
+.clear,.blank,.blank5,.blank10,.blank20{clear:both;}
+.blank,.blank5,.blank10,.blank20{overflow:hidden;}
+.blank{height:0;}
+.blank5{height:5px;}
+.blank10{height:10px;}
+.blank20{height:20px;}
+/* overflow */
+.oh{overflow:hidden;}
+.ov{overflow:visible;}
+._oh{_overflow:hidden;}
+.toh{white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow: hidden;}
+.wbk{word-break: break-all;	word-wrap: break-word;}
+/* float */
+.l{float:left;display:inline;}
+.r{float:right;display:inline;}
+/* position */
+.pa{position:absolute;}
+.pr{position:relative;}
+.cTL,.cTR,.cBL,.cBR{position:absolute;}
+.cTL{top:0px;left:0px;}
+.cTR{top:0px;right:0px;}
+.cBL{bottom:0px;left:0px;}
+.cBR{bottom:0px;right:0px;}
+/* display */
+.dn,.hide{display:none;}
+.di{display:inline;}
+.db{display:block;}
+.dib-wrap {font-size:0;*word-spacing:-1px;}
+.dib-wrap .dib{font-size: 12px;letter-spacing: normal;word-spacing: normal;vertical-align:top;}
+@media screen and (-webkit-min-device-pixel-ratio:0){.dib-wrap{letter-spacing:-5px;}}
+.dib {display: inline-block;*display:inline;*zoom:1;}
+/* text */
+.tC{text-align:center;}
+.tR{text-align:right;}
+.tL{text-align:left;}
+.tid{text-indent:-9999px;}
+/* vertical-align */
+.vm{vertical-align:middle;}
+.vtb{vertical-align:text-bottom;}
+.vb{vertical-align:bottom;}
+.vt{vertical-align:top;}
+.vn{vertical-align:-2px;}
+/* font */
+.fn{font-weight:normal; font-style:normal;}
+.fb{font-weight:bold;}
+.fi{font-style:italic;}
+.f12{font-size:12px;}
+.f14{font-size:14px;}
+.f16{font-size:16px;}
+
+/* clearStyle */
+.cS{border:none;outline: none;background:none;resize:none;}
+
