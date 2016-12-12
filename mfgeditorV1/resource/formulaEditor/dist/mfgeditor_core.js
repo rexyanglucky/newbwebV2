@@ -289,7 +289,7 @@ editorCanvas.simbol.prototype.options["limit_leftright"] = function () {
         e.level = e.level > e.child[2].level ? e.level : e.child[2].level + 1;
         e.size = t;
         e.offset = e.child[1].height - e.size * .55 + 3;
-        e.value = "\\lim_{" + e.child[1].getValue() + "\\rightarrow" + e.child[2].getValue() + "}";
+        e.value = "\\underset{" + e.child[1].getValue() + "\\rightarrow" + e.child[2].getValue() + "}{lim}";
     }
     ;
     e.draw = function (e, t, n) {
@@ -4112,6 +4112,10 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
             var n = e;
             if (this.currentId > 0) {
                 var r = $("#textcell" + this.list[this.currentId]).parent();
+                // if(!r.attr("id")){
+                //     $(t).remove();
+                //     return;
+                // }
                 var i = r.attr("id").substring(14);
                 var s = $("#editortablerow" + i + " > td:eq(0)").attr("id").substring(8);
                 s = this.getListId(s);
@@ -4168,6 +4172,7 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
                 this.repairOffset();
                 this.saveData()
             }
+
         },
         clear: function (t) {
             if (t.hasClass("formulaOutplane")) {
@@ -4346,12 +4351,16 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
             var l = e.outplane.getPositionForInput(a[0]);
             var c = a[0].value.substring(0, l);
             f[0].value = a[0].value.substring(l, a[0].value.length);
+            //复制样式
+            f.attr("styleContent", a.attr("styleContent"));
             a[0].value = c;
+            this.reWriteCssInput(a);
+            this.reWriteCssInput(f);
             this.repairInput(a);
             this.repairInput(f);
             a.blur();
             this.repairOffset();
-            this.saveData()
+            this.saveData();
         },
         addTable: function (r, cl, style) {
             //if (document.activeElement != $("#textcell" + this.list[this.currentId] + " > input")[0]) {
@@ -4363,7 +4372,7 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
             if (!(r > 0 && cl > 0)) {
                 return;
             }
-    
+
             this.id++;
             this.list.splice(this.currentId + 1, 0, this.id);
             var s = this.id;
@@ -4376,22 +4385,25 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
             u.insertAfter($("#textcell" + this.list[this.currentId]));
             var a = $("#textcell" + this.list[this.currentId - 1] + " > input");
             var f = $("#textcell" + this.list[this.currentId + 1] + " > input");
-            var ctd = $("#textcell" + this.list[this.currentId ]);
+            var ctd = $("#textcell" + this.list[this.currentId]);
             a.focus();
             var l = e.outplane.getPositionForInput(a[0]);
             var c = a[0].value.substring(0, l);
             f[0].value = a[0].value.substring(l, a[0].value.length);
-            var tHtml = '<table class="editorTable">';
+            var tHtml = '<table class="editorTable ">';
             var tdnum = 0;
             for (var m = 0; m < r; m++) {
-                tHtml += '<tr class="editortablerow">';
+                tHtml += '<tr class="editortablerow ">';
                 for (var h = 0; h < cl; h++) {
                     tdnum++;
                     this.id++;
                     this.list.splice(this.currentId + tdnum, 0, this.id);
+                    this.rowID++;
+                   var tp= $("#textcell" + this.list[this.currentId]).parent();
+                    this.rowList.splice(this.getRowListId(tp[0].id.substring(14)) + 1, 0, this.rowID);
                     //tHtml += '<td id="textcell' + this.id + '" editstate="true" style="border:solid 1px gray">';
                     tHtml += '<td  editstate="true" style="border:solid 1px gray">';
-                    tHtml += '<table class="editorTable"><tr class="editortablerow"><td id="textcell' + this.id + '" edittype="Text" nowrap="nowrap">';
+                    tHtml += '<table class="editorTable insertTable"><tr class="editortablerow inserttablerow" id="editortablerow'+this.rowID+'"><td id="textcell' + this.id + '" edittype="Text" nowrap="nowrap">';
                     tHtml += '<input type="text" class="celltext" style="width: 10px;" onpaste="editorCanvas.paste()">';
                     tHtml += '</td></tr></table>';
                     tHtml += '</td>';
@@ -4402,6 +4414,11 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
             tHtml += '</table>';
             ctd.append(tHtml);
             a[0].value = c;
+            //复制样式
+            f.attr("styleContent", a.attr("styleContent"));
+            a[0].value = c;
+            this.reWriteCssInput(a);
+            this.reWriteCssInput(f);
             this.repairInput(a);
             this.repairInput(f);
             a.blur();
@@ -4410,9 +4427,10 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
         },
         repairInput: function (e) {
             var t = this.widthGetter(e[0]);
-            e.width(t + 8);
+            //e.width(t + 8);
+            e.width(t);
             if (!e[0].value) {
-                e.width(10)
+                e.width(10);
             }
         },
         //根据styleContent 描绘input样式
@@ -4961,7 +4979,7 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
         }
         else if (r.attr("edittype") == "Table") {
             n.onBlurEvent();
-            
+
         }
         t.stopPropagation();
     });
@@ -4972,8 +4990,8 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
                 e.replay()
             }
         }
-        e.outplane.isCanvas = false
-    }
+            e.outplane.isCanvas = false;
+        }
     ;
     e.creatFormulaOutplane = function (t) {
         e.outplane.id++;
@@ -5007,25 +5025,46 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
         var styleArr = styleContent.split(',');
         var html = "";
         var wrap = "<span>";
-        if (styleContent.indexOf(editorCanvas.styles.Bold) > -1) {
+        // if (styleContent.indexOf(editorCanvas.styles.Bold) > -1) {
+        //     html += "<b>";
+        //     if (styleContent.indexOf(editorCanvas.styles.Itaily) > -1) {
+        //         html += "<em>";
+        //         if (styleContent.indexOf(editorCanvas.styles.ThroughLine) > -1) {
+        //             html += "<del>";
+        //             html += this.reRender(e.val());
+        //             html += "</del>";
+        //         } else {
+        //             html += this.reRender(e.val());
+        //         }
+        //         html += "</em>";
+        //     } else {
+        //         html += this.reRender(e.val());
+        //     }
+        //     html += "</b>";
+        // } else {
+        //     html += this.reRender(e.val());
+        // }
+         if (styleContent.indexOf(editorCanvas.styles.Bold) > -1) {
             html += "<b>";
-            if (styleContent.indexOf(editorCanvas.styles.Itaily) > -1) {
-                html += "<em>";
-                if (styleContent.indexOf(editorCanvas.styles.ThroughLine) > -1) {
-                    html += "<del>";
-                    html += this.reRender(e.val());
-                    html += "</del>";
-                } else {
-                    html += this.reRender(e.val());
-                }
-                html += "</em>";
-            } else {
-                html += this.reRender(e.val());
-            }
-            html += "</b>";
-        } else {
-            html += this.reRender(e.val());
         }
+         if (styleContent.indexOf(editorCanvas.styles.Itaily) > -1) {
+             html += "<em>";
+         }
+         if (styleContent.indexOf(editorCanvas.styles.ThroughLine) > -1) {
+            html += "<del>";
+         }
+         html += this.reRender(e.val());
+          if (styleContent.indexOf(editorCanvas.styles.ThroughLine) > -1) {
+            html += "</del>";
+         }
+            if (styleContent.indexOf(editorCanvas.styles.Itaily) > -1) {
+             html += "</em>";
+         }
+           if (styleContent.indexOf(editorCanvas.styles.Bold) > -1) {
+            html += "</b>";
+        }
+         
+        
         if (styleContent.indexOf(editorCanvas.styles.UnderLine) > -1) {
             wrap = '<span style="text-decoration:underline">';
         }
@@ -5033,26 +5072,94 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
         wrap += "</span>";
         return wrap;
     },
-    e.getFormulaOutput = function (t) {
+    //e.getFormulaOutput = function (t,h) {
+    //    var n = "";
+    //    t.find(".editortablerow").each(function (t, r) {
+    //        var i = "";
+    //        $(r).find("td").each(function (t, n) {
+    //            if ($(n).parents(".insertTable").length == 0||h) {
+    //                if ($(n).attr("edittype") == "Text") {
+    //                    //i += e.reRender($(n).find(".celltext").val())
+    //                    i += e.reWriteHtmlByCssInput($(n).find(".celltext"));
+    //                } else if ($(n).attr("edittype") == "Canvas") {
+    //                    i += "<frm>" + e.reRender($(n).find("canvas").data("latex")) + "</frm>";
+    //                } else if ($(n).attr("edittype") == "Image") {
+    //                    i += $(n).html();
+    //                }
+    //                else if ($(n).attr("edittype") == "Table") {
+    //                    i += $(n).html();
+    //                    i += e.getFormulaOutput($(n).find(".insertTable"), 1);
+    //                }
+    //            }
+
+
+    //        });
+    //        n += (t == 0 ? "" : "\n") + i;
+    //    });
+    //    return n
+    //};
+    e.getFormulaOutput = function (t, h) {
         var n = "";
         t.find(".editortablerow").each(function (t, r) {
             var i = "";
             $(r).find("td").each(function (t, n) {
+                if ($(n).hasClass("hread")) {
+                    return;
+                }
+                $(n).addClass("hread");
                 if ($(n).attr("edittype") == "Text") {
                     //i += e.reRender($(n).find(".celltext").val())
                     i += e.reWriteHtmlByCssInput($(n).find(".celltext"));
                 } else if ($(n).attr("edittype") == "Canvas") {
-                    i += "<frm>" + e.reRender($(n).find("canvas").data("latex")) + "</frm>";
+                    // i += "<frm>" + e.reRender($(n).find("canvas").data("latex")) + "</frm>";
+                    i += "\\(" + e.reRender($(n).find("canvas").data("latex")) + "\\)";
                 } else if ($(n).attr("edittype") == "Image") {
                     i += $(n).html();
                 }
+                else if ($(n).attr("edittype") == "Table") {
+                    if ($(n).parents(".inserttablerow").length == 0) {
+                        //克隆td
+                        var h = $($(n).clone());
+                        $(n).find("td").each(function (index, item) {
+                            if (item.id) {
+                                var v = e.getValueFromTd(item);
+                                h.find("#" + item.id).append(v);
+                            }
+                        });
+                        h.find("input").remove();
+                        i += h.html();
+
+                    }
+                }
+
+
+
 
             });
-            n += (t == 0 ? "" : "\n") + i
+            n += (t == 0 ? "" : "\n") + i;
         });
-        return n
-    }
-    ;
+        $(".hread").removeClass("hread");
+        
+        return n;
+    };
+    e.getValueFromTd = function (n) {
+        if ($(n).hasClass("hread")) {
+            return;
+        }
+        var s = "";
+        $(n).addClass("hread");
+        if ($(n).attr("edittype") == "Text") {
+            //i += e.reRender($(n).find(".celltext").val())
+            s += e.reWriteHtmlByCssInput($(n).find(".celltext"));
+        } else if ($(n).attr("edittype") == "Canvas") {
+            s += "<frm>" + e.reRender($(n).find("canvas").data("latex")) + "</frm>";
+        } else if ($(n).attr("edittype") == "Image") {
+            s += $(n).html();
+        }
+        return s;
+
+
+    };
     e.outplane.valueToCellPro = function (n, r, i) {
         var s = e;
         var o = /<frm>(.*?)<\/frm>/gi;
