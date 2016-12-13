@@ -281,6 +281,48 @@ mfgEditor.prototype.formulaModule = function() {
  });
 
 };
+
+mfgEditor.prototype.imgModule= function() {
+    function preview(e,index) {
+        var vthis=this;
+        var file = e.target.files[0];
+        var supportedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+        if (file && supportedTypes.indexOf(file.type) >= 0) {
+            if(typeof FileReader==='undefined')
+            {
+
+            }
+            else
+            {
+                var oReader = new FileReader();
+                oReader.onload = function (e) {
+                    switch (index)
+                    {
+                        case 1:
+                            vthis.img1=e.target.result;
+                            break;
+                        case 2:
+                            vthis.img2=e.target.result;
+                            break;
+                        case 3:
+                            vthis.img3=e.target.result;
+                            break;
+                    }
+
+                };
+                oReader.readAsDataURL(file);
+
+            }
+        } else {
+            if(file)
+            {
+                u.showPopMsg('文件格式只支持：jpg、jpeg 和 png');
+            }
+            this.clearFile();
+        }
+    }
+   
+}
 mfgEditor.setCurrent = function (elem) {
 
 }
@@ -537,7 +579,8 @@ editorCanvas.getFormulaTableValue = function (elem, hasEntity) {
     } else {
         searchVal = target.find(".latex-textarea").val();
     }
-    return hasEntity ? searchVal : searchVal.replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    return searchVal;
+    //return hasEntity ? searchVal : searchVal.replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 }
 
 editorCanvas.creatFormulaKeyboard = function (elem) {

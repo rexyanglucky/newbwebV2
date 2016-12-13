@@ -179,8 +179,9 @@
             if (arguments[1] != t)
                 n.s.setFont(r);
             if (e == "") {
-                return 1
+                return 1;
             }
+
             return this.s.ctx.measureText(e).width
         },
         adjust: function () {
@@ -4361,6 +4362,7 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
             a.blur();
             this.repairOffset();
             this.saveData();
+            this.resizeImg();
         },
         addTable: function (r, cl, style) {
             //if (document.activeElement != $("#textcell" + this.list[this.currentId] + " > input")[0]) {
@@ -4399,11 +4401,11 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
                     this.id++;
                     this.list.splice(this.currentId + tdnum, 0, this.id);
                     this.rowID++;
-                   var tp= $("#textcell" + this.list[this.currentId]).parent();
+                    var tp = $("#textcell" + this.list[this.currentId]).parent();
                     this.rowList.splice(this.getRowListId(tp[0].id.substring(14)) + 1, 0, this.rowID);
                     //tHtml += '<td id="textcell' + this.id + '" editstate="true" style="border:solid 1px gray">';
                     tHtml += '<td  editstate="true" style="border:solid 1px gray">';
-                    tHtml += '<table class="editorTable insertTable"><tr class="editortablerow inserttablerow" id="editortablerow'+this.rowID+'"><td id="textcell' + this.id + '" edittype="Text" nowrap="nowrap">';
+                    tHtml += '<table class="editorTable insertTable"><tr class="editortablerow inserttablerow" id="editortablerow' + this.rowID + '"><td id="textcell' + this.id + '" edittype="Text" nowrap="nowrap">';
                     tHtml += '<input type="text" class="celltext" style="width: 10px;" onpaste="editorCanvas.paste()">';
                     tHtml += '</td></tr></table>';
                     tHtml += '</td>';
@@ -4473,17 +4475,20 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
                 "white-space": "nowrap"
             });
             if (!e.value) {
-                e.value = ""
+                e.value = "";
             }
             var r = e.value.replace(/&/g, "$");
-            n.innerHTML = r.replace(/\s/gi, "&nbsp;").replace(/>/g, "&gt;").replace(/</g, "&lt;");
+            //n.innerHTML = r.replace(/\s/gi, "&nbsp;").replace(/>/g, "&gt;").replace(/</g, "&lt;");
+            //n.innerHTML = r.replace(/\s/gi, "&ensp;").replace(/>/g, "&gt;").replace(/</g, "&lt;");
+            n.innerHTML = r.replace(/[\u3000]/gi, "&nbsp;").replace(/\s/gi, "&ensp;").replace(/>/g, "&gt;").replace(/</g, "&lt;");
+
             n.id = "latex-toget";
             n.setAttribute("class", "match");
             n.style.width = "";
             t.append(n);
             var i = $(n).width();
             $(n).remove();
-            return i
+            return i;
         },
         setCursorPosition: function (e, t) {
             try {
@@ -4691,6 +4696,63 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
             if (n) {
                 e.resetCanvas(n)
             }
+        },
+        resizeImg: function () {
+            $(".editorTables img").die("click");
+            $(".editorTables img").live("click", function () {
+
+                
+                if ($("#resizediv").length > 0) {
+                    $("#resizediv").hide();
+                } else {
+                    var rdiv = '<div class="edui-scale" id="resizediv" controlimg="' + this.id + '" unselectable="on" style="z-index: 999; position: absolute; display: block;">' +
+                   '<span class="edui-scale-hand0"></span>' +
+                   //'<span class="edui-scale-hand1"></span>' +
+                   '<span class="edui-scale-hand2"></span>' +
+                   //'<span class="edui-scale-hand3"></span>' +
+                   //'<span class="edui-scale-hand4"></span>' +
+                   '<span class="edui-scale-hand5"></span>' +
+                   //'<span class="edui-scale-hand6"></span>' +
+                   '<span class="edui-scale-hand7"></span>' +
+                   '</div>';
+
+                    $($(".editorTables")[0]).append(rdiv);
+                    var drag = false;
+                    var w = $("#resizediv").width();
+                    var h = $("#resizediv").height();
+                    var cx = 0;
+                    var cy = 0;
+                    $(".edui-scale span").mousedown(function (e) {
+                        drag = true;
+                        w = $("#resizediv").width();
+                        h = $("#resizediv").height();
+                        cx = e.clientX;
+                        cy = e.clientY;
+                    }).mouseup(function (e) {
+                        drag = false;
+                    });
+
+                    $(document).mouseup(function () { drag = false; $("#resizediv").hide(); }).mousemove(function (e) {
+                        if (drag) {
+                            var rw = 0;
+                            var rh = 0;
+                            rw = w + e.clientX - cx;
+                            rh = h + e.clientY - cy;
+                            alert($(this).attr("id"));
+                            $("#resizediv").css({ "width": rw + "px", "height": rh + "px" });
+                            var cimg =$("#"+ $("#resizediv").attr("controlimg"));
+                            cimg.css({ "width": rw + "px", "height": rh + "px" });
+                            //console.log(e);
+                        }
+                    });
+                    //$("body").click(function () { $("#resizediv").hide(); });
+                }
+                $("#resizediv").show();
+                $("#resizediv").attr("controlimg", this.id);
+                //$("#resizediv").css({ "top": $(this).position().top, "left": $(this).position().left, "width": $(this).width() + "px", "height": $(this).height() + "px" });
+                $("#resizediv").css({ "bottom":$(this).offsetParent().height()- $(this).position().top-$(this).height(), "left": $(this).position().left, "width": $(this).width() + "px", "height": $(this).height() + "px" });
+            });
+
         }
     };
     $(".editortablerow > td").live("keydown", function (t) {
@@ -4990,8 +5052,8 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
                 e.replay()
             }
         }
-            e.outplane.isCanvas = false;
-        }
+        e.outplane.isCanvas = false;
+    }
     ;
     e.creatFormulaOutplane = function (t) {
         e.outplane.id++;
@@ -5010,9 +5072,10 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
     ;
     e.reRender = function (e) {
         if (e) {
-            return e.replace(/\s/gi, "&nbsp;").replace(/>/g, "&gt;").replace(/</g, "&lt;")
+            return e.replace(/[\u3000]/gi, "&nbsp;").replace(/\s/gi, "&ensp;").replace(/>/g, "&gt;").replace(/</g, "&lt;");
+            //return e.replace(/\s/gi, "&nbsp;").replace(/>/g, "&gt;").replace(/</g, "&lt;");
         } else {
-            return ""
+            return "";
         }
     }
     ;
@@ -5044,27 +5107,27 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
         // } else {
         //     html += this.reRender(e.val());
         // }
-         if (styleContent.indexOf(editorCanvas.styles.Bold) > -1) {
+        if (styleContent.indexOf(editorCanvas.styles.Bold) > -1) {
             html += "<b>";
         }
-         if (styleContent.indexOf(editorCanvas.styles.Itaily) > -1) {
-             html += "<em>";
-         }
-         if (styleContent.indexOf(editorCanvas.styles.ThroughLine) > -1) {
+        if (styleContent.indexOf(editorCanvas.styles.Itaily) > -1) {
+            html += "<em>";
+        }
+        if (styleContent.indexOf(editorCanvas.styles.ThroughLine) > -1) {
             html += "<del>";
-         }
-         html += this.reRender(e.val());
-          if (styleContent.indexOf(editorCanvas.styles.ThroughLine) > -1) {
+        }
+        html += this.reRender(e.val());
+        if (styleContent.indexOf(editorCanvas.styles.ThroughLine) > -1) {
             html += "</del>";
-         }
-            if (styleContent.indexOf(editorCanvas.styles.Itaily) > -1) {
-             html += "</em>";
-         }
-           if (styleContent.indexOf(editorCanvas.styles.Bold) > -1) {
+        }
+        if (styleContent.indexOf(editorCanvas.styles.Itaily) > -1) {
+            html += "</em>";
+        }
+        if (styleContent.indexOf(editorCanvas.styles.Bold) > -1) {
             html += "</b>";
         }
-         
-        
+
+
         if (styleContent.indexOf(editorCanvas.styles.UnderLine) > -1) {
             wrap = '<span style="text-decoration:underline">';
         }
@@ -5100,12 +5163,15 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
     //};
     e.getFormulaOutput = function (t, h) {
         var n = "";
+        var hread = 0;
         t.find(".editortablerow").each(function (t, r) {
             var i = "";
             $(r).find("td").each(function (t, n) {
                 if ($(n).hasClass("hread")) {
+                    hread = 1;
                     return;
                 }
+                hread = 0;
                 $(n).addClass("hread");
                 if ($(n).attr("edittype") == "Text") {
                     //i += e.reRender($(n).find(".celltext").val())
@@ -5131,15 +5197,13 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
 
                     }
                 }
-
-
-
-
             });
-            n += (t == 0 ? "" : "\n") + i;
+            if (!hread) {
+                n += (t == 0 ? "" : "<br/>") + i;
+            }
         });
         $(".hread").removeClass("hread");
-        
+
         return n;
     };
     e.getValueFromTd = function (n) {

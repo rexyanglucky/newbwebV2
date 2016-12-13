@@ -15,6 +15,9 @@
 .mfgEditor .fe-Math .fe-btn{background: url(img_d/fe-Math.png) no-repeat;}
 .mfgEditor .fe-Chem .fe-btn{background: url(img_d/fe-Chem.png) no-repeat;}
 .mfgEditor .fe-Style .fe-btn{background: url(img_d/fe-Style.png) no-repeat;}
+.mfgEditor  .photo_choice{ position: relative;display: inline-block;background: #ffffff;cursor: pointer;}
+.mfgEditor  .photo_choice .upimg{position:absolute;top:0px;left:0px;opacity:0;height: 2.9rem;width: 2.9rem;filter:alpha(opacity=0);display: block;cursor: pointer;}
+.mfgEditor  .photo_choice .pimg{height: 2.9rem;width: 2.9rem;border: solid 0.025rem #e7e7e7;padding: 0;cursor: pointer;}
 .mfgEditor .fe-ChemWrp,.mfgEditor .fe-MathWrp{display: none;}
 
 .mfgEditor .fe-Math{overflow: hidden;}
@@ -26,7 +29,16 @@
 .editortablerow td{vertical-align: top;cursor: text;}
 #latex-outplane{cursor: text;}
 .formulaOutplane{position: relative;}
-
+.edui-scale { border: 1px solid #38B2CE;position: absolute;}
+.edui-scale span{position: absolute;left: 0;top: 0;width: 7px;height: 7px;overflow: hidden;font-size: 0px;display: block;background-color: #3C9DD0;}
+.edui-scale .edui-scale-hand0 {cursor: nw-resize;top: 0;margin-top: -4px;left: 0;margin-left: -4px;}
+.edui-scale .edui-scale-hand1 {cursor: n-resize;top: 0;margin-top: -4px;left: 50%;margin-left: -4px;}
+.edui-scale .edui-scale-hand2 {cursor: ne-resize;top: 0;margin-top: -4px;left: 100%;margin-left: -3px;}
+.edui-scale .edui-scale-hand3 {cursor: w-resize;top: 50%;margin-top: -4px;left: 0;margin-left: -4px;}
+.edui-scale .edui-scale-hand4 {cursor: e-resize;top: 50%;margin-top: -4px;left: 100%;margin-left: -3px;}
+.edui-scale .edui-scale-hand5 {cursor: sw-resize;top: 100%;margin-top: -3px;left: 0;margin-left: -4px;}
+.edui-scale .edui-scale-hand6 {cursor: s-resize;top: 100%;margin-top: -3px;left: 50%;margin-left: -4px;}
+.edui-scale .edui-scale-hand7 {cursor: se-resize;top: 100%;margin-top: -3px;left: 100%;margin-left: -3px;}
 /**********弹框样式**************/
 .keyboard_wrap {position: absolute; left: 50%;width: 500px; }
 .keyboard_wrap .title {

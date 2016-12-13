@@ -162,6 +162,27 @@
             }
         }
     };
+    function preview(e) {
+        var file = e.target.files[0];
+        var supportedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+        if (file && supportedTypes.indexOf(file.type) >= 0) {
+            if (typeof FileReader === 'undefined') {
+
+            }
+            else {
+                var oReader = new FileReader();
+                oReader.onload = function (e) {
+                    $(".pimg").attr("src", e.target.result);
+                };
+                oReader.readAsDataURL(file);
+
+            }
+        } else {
+            if (file) {
+                u.showPopMsg('文件格式只支持：jpg、jpeg 和 png');
+            }
+        }
+    }
     function getfeList(feArr) {
         var feList = ''
         for (var i = 0; i < feArr.length; i++) {
@@ -270,14 +291,40 @@
                     case insertHtml.Image:
                         {
                             $("#imgset").remove();
-                            $(".fe-StyleWrp").append('<div id="imgset">' +
+                            $(".fe-StyleWrp").append('<div id="imgset" >' +
+                                '<div class="photo_choice">'+
+                                '<input type="file" class="upimg">' +
+                                '<img src="../resource/formulaEditor/air/feEditor/img_s/addimg.png" class="pimg"/>' +
+                                '</div><input type="button" value="上传" id="btnupimg"/><br/>' +
                                 '<input id="imgurl" type="url" placeholder="请输入图片url"/>' +
                                 '<input type="button" value="确定" id="showImg"/></div>');
                             $("#showImg").unbind("click");
                             $("#showImg").click(function () {
-
                                 editorCanvas.outplane.addImg($("#imgurl").val() || $this.data("value"));
+                                $(".pimg")[0].src = "../resource/formulaEditor/air/feEditor/img_s/addimg.png";
+                                $("#imgurl").val("");
+
                             });
+                            $("#upimg").unbind("change");
+                            $(".upimg").change(function(e) {
+                                preview(e, this);
+                            });
+                            $("#btnupimg").unbind("click");
+                            $("#btnupimg").click(function() {
+                                $.ajax({
+                                    url: "http://localhost:5483/ImgUp.ashx",
+                                    type: "POST",
+                                    data: { img: $(".pimg")[0].src },
+                                    success: function(data) {
+                                        $("#imgurl").val(data);
+                                    },
+                                    error: function() {
+                                        alert("上传失败");
+                                    }
+                                });
+                            });
+
+
                         }
                         break;
 
@@ -288,7 +335,6 @@
                
 
             };
-            // $(this).closest(".feEditor").parent().find(".feTip").hide();
             return false;
         }).hover(function () {
             $(this).css("background-position-y", "-36px");
