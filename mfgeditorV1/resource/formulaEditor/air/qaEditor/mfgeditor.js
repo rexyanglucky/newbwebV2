@@ -40,6 +40,13 @@ var _frame = '<div class="qaEditor latex-outer pr '+ this.settings.iclass +'">\
                             <span class="btn-text l">公式</span>\
                             <span class="btn-arrow qsp l"></span>\
                         </a>\
+    </div>\
+  <div class="pasteBtnWrp pa latex-clickBtn">\
+                    <a href="###" hidefocus class="pasteBtn qa-btn clearfix">\
+                            <span class="btn-icon qsp l"></span>\
+                            <span class="btn-text l">粘贴</span>\
+                            <span class="btn-arrow qsp l"></span>\
+                        </a>\
                     </div>\
                 </div>';
     this.frame = $(_frame);
@@ -253,7 +260,7 @@ mfgEditor.prototype.formulaModule = function() {
  var $fomBtn = $frame.find(".fomBtnWrp");
  var $textArea = $frame.find(".feTextArea");
  var $textArea2 = $frame.find(".textArea");
-    
+    var $pasteBtn = $frame.find(".pasteBtnWrp");
  $fomBtn.click(function(){
      if (!$(this).data("live") && !$frame.data("formula")) {
          var textareaVal = $frame.find(".textArea").val();
@@ -276,9 +283,23 @@ mfgEditor.prototype.formulaModule = function() {
      setTimeout(function(){
          $frame.addClass("focusStyle");
      },0);
-     $(".jOutline").remove();
      return false;       
  });
+    $pasteBtn.click(function() {
+        if (!$(this).data("hclick")) {
+            $textArea2.hide();
+            $textArea.show();
+            var pvalue = 'a发给对方<span style="text-decoration: underline;">是个啥</span>地方的vgfdf<frm>{\\frac{1}{2}}</frm>gdgffdsg<span style="text-decoration: underline;">bc</span><img id="1481696728174" style="width: 137px; height: 44px;" src="http://www.mofangge.com/css/style1/img/changeskinlogo.png">';
+            editorCanvas.activeFormulaZone(pvalue, $textArea);
+            mfgEditor.setCurrent($frame);
+            $(this).data("hclick", true);
+            $fomBtn.data("live", true);
+            $frame.data("formula", true);
+            $frame.find(".textArea_tips").trigger("click");
+            $(this).hide();
+        }
+       
+    });
 
 };
 
@@ -414,6 +435,10 @@ $(function () {
         };
     }
     
+    function copyValueToBox(value,t) {
+        editorCanvas.activeFormulaZone(value, t);
+    }
+    
     /*搜题目*/
     (function initSearchTablet() {
         function openSearchPage() {
@@ -495,7 +520,7 @@ $(function () {
         });
     })();
 
-   
+
 });
 
 //处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外  

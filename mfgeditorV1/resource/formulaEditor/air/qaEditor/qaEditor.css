@@ -1,4 +1,5 @@
-.qaEditor{width: 678px;height: 178px;}
+/*.qaEditor{width: 678px;height: 178px;}*/
+.qaEditor{width: 678px;min-height: 500px;}
 .qaEditor .qsp{background-image: url(img_d/normal_sp.png);background-repeat: no-repeat;}
 
 .qaEditor .subBtnWrp{left: 6px;top: 1px;z-index: 600;}
@@ -10,9 +11,9 @@
 /*ä¸‰ä¸ªå¤§å—å¸ƒå±€*/
 .qaEditor .feTextArea,.qaEditor .textArea,.qaEditor .backFocusLayer{left:-1px;top:28px;border-width:1px;border-style:solid;border-color:#eee #cac7be;}
 .qaEditor .textArea_tips{width: 654px;height: 96px;left:0px;top:28px;padding:10px 12px;color: #bfbfbf;cursor: text;background-image: url(about:blank);}
-.qaEditor .textArea{width: 654px;height: 84px;padding:5px 12px;color: #666;font-size: 14px;border: none;}
-.qaEditor .feTextArea{width: 678px;height: 94px;/*max-height: 94px;*/border-bottom-width: 0px;}
-.qaEditor .backFocusLayer{width: 678px;height: 114px;}
+.qaEditor .textArea{width: 654px;/*height: 84px;*/height: 440px;padding:5px 12px;color: #666;font-size: 14px;border: none;}
+.qaEditor .feTextArea{width: 678px;/*height: 94px;*/height: 440px;/*max-height: 94px;*/border-bottom-width: 0px;}
+.qaEditor .backFocusLayer{width: 678px;min-height:440px;}
 .qaEditor .feTextArea{cursor:auto;overflow: auto; position:relative;_position:absolute;}
 .qaEditor .feTextArea .editorTables{margin: 8px 0 0 10px;width: 90%\9;position: absolute;z-index: 1;}
 .qaEditor .feTextArea .editorTablesEx{cursor: text;height: 100%;width: 100%;left: 0;top: 0;top: -20px\9;position: absolute;z-index: 0;}

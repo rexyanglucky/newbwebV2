@@ -6,9 +6,10 @@
     <meta name="keywords" content="公式编辑器" />
     <meta name="description" content="公式编辑器" />
     <link type="text/css" href="../resource/common/style/_core.css" rel="stylesheet" />
-    <link type="text/css" href="../resource/formulaEditor/air/qaEditor/qaEditor.css?052015031208" rel="stylesheet" />
+    <link type="text/css" href="../resource/formulaEditor/air/qaEditor/qaEditor.css?052015031208" rel="stylesheet"/>
+    <link type="text/css" href="../resource/formulaEditor/air/feEditor/mfgEditor.css?0000" rel="stylesheet"/>
     <script type="text/javascript">
-	var qa_domain = "http://www.7wenta.com/",static_domain = "../",buildVersion = "?0520150209";
+        var qa_domain = "http://www.7wenta.com/", static_domain = "../", buildVersion = "?0520150209";
     </script>
 
 
@@ -16,39 +17,43 @@
 <body>
 
 
-<div class="cnt_hd mC w980">
-    <div class="sEditorCenter pr mC">
-        <br/>
-        <div class="sEditorBoxWrp pr">
+    <div class="cnt_hd mC w980">
+        <div class="sEditorCenter pr mC">
+            <br />
+            <div class="sEditorBoxWrp pr">
 
+            </div>
         </div>
     </div>
-</div>
-<input type="button" value="获取latex" onclick="getLatex()"/>
-<br>
-渲染后结果
-<div id="latexContent"></div>
-源码
-<div id="latexContent1"></div>
+
+    <input type="button" value="获取latex" onclick="getLatex()" />
+    <br>
+    渲染后结果
+    <div id="latexContent"></div>
+    源码
+    <div id="latexContent1"></div>
 
 
 
-<script type="text/javascript" src="../resource/common/script/lib/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="../resource/common/script/lib/in-min.js"></script>
-<script type="text/javascript" src="../resource/formulaEditor/air/excanvas.js"></script>
-<script type="text/javascript" src="../resource/formulaEditor/dist/mfgeditor_core.js"></script>
-<script type="text/javascript" src="../resource/formulaEditor/air/qaEditor/mfgEditor.js"></script>
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../resource/common/script/lib/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../resource/common/script/lib/in-min.js"></script>
+    <script type="text/javascript" src="../resource/formulaEditor/air/excanvas.js"></script>
+    <script type="text/javascript" src="../resource/formulaEditor/dist/mfgeditor_core.js"></script>
+    <script type="text/javascript" src="../resource/formulaEditor/air/qaEditor/mfgEditor.js"></script>
+    <script type="text/javascript" async
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-<script type="text/javascript">
-    function getLatex () {
-             var txt = editorCanvas.getFormulaTableValue($(".sEditorBox .editorForm"));
-              $("#latexContent").html(txt);
-              $("#latexContent1").html(txt);
-            
-   MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById("latexContent")]);
-    }
-</script>
+    <script type="text/javascript">
+        function getLatex() {
+            var txt = editorCanvas.getFormulaTableValue($(".sEditorBox .editorForm"));
+            $("#latexContent").html(txt.replace("\\left", "").replace("\\right", "").replace("\\{", ""));
+            $("#latexContent1").html(txt);
+
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById("latexContent")]);
+
+
+        }
+
+    </script>
 </body>
 </html>

@@ -1290,10 +1290,11 @@ editorCanvas.simbol.prototype.options["equation"] = function () {
         e.level = e.child[0].level > e.child[1].level ? e.child[0].level : e.child[1].level + 1;
         e.width = e.child[0].width > e.child[1].width ? e.child[0].width : e.child[1].width;
         e.height = e.child[0].height + e.child[1].height;
-        e.value = "\\begin{array}{l}{" + e.child[0].getValue() + "}\\\\{" + e.child[1].getValue() + "}\\end{array}";
+        //e.value = "\\begin{array}{l}{" + e.child[0].getValue() + "}\\\\{" + e.child[1].getValue() + "}\\end{array}";
+        e.value = "\\begin{cases}{" + e.child[0].getValue() + "}\\\\{" + e.child[1].getValue() + "}\\end{cases}";
         e.size = t;
-        e.offset = (e.height - t) / 2
-    }
+            e.offset = (e.height - t) / 2;
+        }
     ;
     e.draw = function (e, t, n) {
         editorCanvas.s.transaction(e.child[0], t, n);
@@ -4701,18 +4702,18 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
             $(".editorTables img").die("click");
             $(".editorTables img").live("click", function () {
 
-                
+
                 if ($("#resizediv").length > 0) {
                     $("#resizediv").hide();
                 } else {
                     var rdiv = '<div class="edui-scale" id="resizediv" controlimg="' + this.id + '" unselectable="on" style="z-index: 999; position: absolute; display: block;">' +
                    '<span class="edui-scale-hand0"></span>' +
-                   //'<span class="edui-scale-hand1"></span>' +
+                   '<span class="edui-scale-hand1"></span>' +
                    '<span class="edui-scale-hand2"></span>' +
-                   //'<span class="edui-scale-hand3"></span>' +
-                   //'<span class="edui-scale-hand4"></span>' +
+                   '<span class="edui-scale-hand3"></span>' +
+                   '<span class="edui-scale-hand4"></span>' +
                    '<span class="edui-scale-hand5"></span>' +
-                   //'<span class="edui-scale-hand6"></span>' +
+                   '<span class="edui-scale-hand6"></span>' +
                    '<span class="edui-scale-hand7"></span>' +
                    '</div>';
 
@@ -4722,12 +4723,41 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
                     var h = $("#resizediv").height();
                     var cx = 0;
                     var cy = 0;
+                    var spanclick = "t1";
                     $(".edui-scale span").mousedown(function (e) {
                         drag = true;
                         w = $("#resizediv").width();
                         h = $("#resizediv").height();
                         cx = e.clientX;
                         cy = e.clientY;
+                        switch ($(this).attr("class")) {
+                            case "edui-scale-hand0":
+                                spanclick = "tl0";
+                                break;
+                            case "edui-scale-hand1":
+                                spanclick = "t1";
+                                break;
+                            case "edui-scale-hand2":
+                                spanclick = "tr2";
+                                break;
+                            case "edui-scale-hand3":
+                                spanclick = "l0";
+                                break;
+                            case "edui-scale-hand4":
+                                spanclick = "r0";
+                                break;
+                            case "edui-scale-hand5":
+                                spanclick = "bl0";
+                                break;
+                            case "edui-scale-hand6":
+                                spanclick = "b1";
+                                break;
+                            case "edui-scale-hand7":
+                                spanclick = "br2";
+                                break;
+                            default:
+                        }
+
                     }).mouseup(function (e) {
                         drag = false;
                     });
@@ -4736,11 +4766,30 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
                         if (drag) {
                             var rw = 0;
                             var rh = 0;
-                            rw = w + e.clientX - cx;
-                            rh = h + e.clientY - cy;
-                            alert($(this).attr("id"));
+                            rw = w;
+                            rh = h;
+                            var ud = e.clientY > cy;
+                            if (spanclick.indexOf("t") > -1) {
+                                rh = h - (e.clientY - cy);
+                            }
+                            if (spanclick.indexOf("b") > -1) {
+                                rh = h + (e.clientY - cy);
+                            }
+                            if (spanclick.indexOf("l") > -1) {
+                                rw = w - (e.clientX - cx);
+                            }
+                            if (spanclick.indexOf("r") > -1) {
+                                rw = w + (e.clientX - cx);
+                            }
+
+                            //if (e.clientY > cy) {
+                            //    rh = h + (e.clientY - cy);
+                            //} else {
+                            //    rh=h-()
+                            //    }
+
                             $("#resizediv").css({ "width": rw + "px", "height": rh + "px" });
-                            var cimg =$("#"+ $("#resizediv").attr("controlimg"));
+                            var cimg = $("#" + $("#resizediv").attr("controlimg"));
                             cimg.css({ "width": rw + "px", "height": rh + "px" });
                             //console.log(e);
                         }
@@ -4750,7 +4799,7 @@ editorCanvas.Analysis.prototype.options["not"] = function (e) {
                 $("#resizediv").show();
                 $("#resizediv").attr("controlimg", this.id);
                 //$("#resizediv").css({ "top": $(this).position().top, "left": $(this).position().left, "width": $(this).width() + "px", "height": $(this).height() + "px" });
-                $("#resizediv").css({ "bottom":$(this).offsetParent().height()- $(this).position().top-$(this).height(), "left": $(this).position().left, "width": $(this).width() + "px", "height": $(this).height() + "px" });
+                $("#resizediv").css({ "bottom": $(this).offsetParent().height() - $(this).position().top - $(this).height(), "left": $(this).position().left, "width": $(this).width() + "px", "height": $(this).height() + "px" });
             });
 
         }
